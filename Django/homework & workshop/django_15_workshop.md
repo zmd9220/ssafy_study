@@ -125,6 +125,21 @@ ___
 > (선택) 해당 프로필의 유저가 작성한 모든 글의 내용과 좋아요 숫자를 보여준다.
 
 ``` django
+<!-- index.html -->
+  {% if request.user.is_authenticated %}
+	{# 내 프로필로 가는 링크 #}
+    <a href="{% url 'accounts:profile' request.user.username %}">[내 프로필]</a>
+    <a href="{% url 'articles:create' %}">[CREATE]</a>
+  {% else %}
+    <a href="{% url 'accounts:login' %}">[새 글을 작성하려면 로그인하세요.]</a>
+  {% endif %}
+
+{# 작성자 프로필로 가는 링크 #}
+<p><b>작성자 : <a href="{% url 'accounts:profile' article.user.username %}">{{ article.user }}</a></b></p>
+
+```
+
+```django
 <!-- profile.html -->
 <h2> {{ you.username }}'s 페이지 </h2>
   <hr>
@@ -166,7 +181,6 @@ ___
   {% endfor %}
 
   <a class="btn btn-primary" href="{% url 'articles:index' %}">돌아가기</a>
-
 ```
 
 
@@ -175,11 +189,24 @@ ___
 
 
 
-### 4. 
+### 4. 결과
 
-> 
+#### 프로필 페이지(본인 프로필) - 팔로워 목록
 
-``` python
+![Cap 2021-04-01 11-14-01-751](django_15_workshop.assets/Cap 2021-04-01 11-14-01-751.png)
 
-```
+#### 프로필 페이지(본인 프로필) - 팔로우 목록
 
+![Cap 2021-04-01 11-14-17-362](django_15_workshop.assets/Cap 2021-04-01 11-14-17-362.png)
+
+#### 다른 사람의 프로필을 들어갔을 때 (팔로우 전)
+
+![Cap 2021-04-01 11-13-00-771](django_15_workshop.assets/Cap 2021-04-01 11-13-00-771.png)
+
+#### 팔로우 후
+
+![Cap 2021-04-01 11-13-08-411](django_15_workshop.assets/Cap 2021-04-01 11-13-08-411.png)
+
+#### 선택사항 - 게시글 목록, 좋아요 수
+
+![Cap 2021-04-01 11-24-00-938](django_15_workshop.assets/Cap 2021-04-01 11-24-00-938.png)
