@@ -193,20 +193,20 @@ ___
 
 #### 프로필 페이지(본인 프로필) - 팔로워 목록
 
-![Cap 2021-04-01 11-14-01-751](django_15_workshop.assets/Cap 2021-04-01 11-14-01-751.png)
+![Cap 2021-04-01 11-14-01-751](image/django_15_workshop.assets/Cap 2021-04-01 11-14-01-751.png)
 
 #### 프로필 페이지(본인 프로필) - 팔로우 목록
 
-![Cap 2021-04-01 11-14-17-362](django_15_workshop.assets/Cap 2021-04-01 11-14-17-362.png)
+![Cap 2021-04-01 11-14-17-362](image/django_15_workshop.assets/Cap 2021-04-01 11-14-17-362.png)
 
 #### 다른 사람의 프로필을 들어갔을 때 (팔로우 전)
 
-![Cap 2021-04-01 11-13-00-771](django_15_workshop.assets/Cap 2021-04-01 11-13-00-771.png)
+![Cap 2021-04-01 11-13-00-771](image/django_15_workshop.assets/Cap 2021-04-01 11-13-00-771.png)
 
 #### 팔로우 후
 
-![Cap 2021-04-01 11-13-08-411](django_15_workshop.assets/Cap 2021-04-01 11-13-08-411.png)
+![Cap 2021-04-01 11-13-08-411](image/django_15_workshop.assets/Cap 2021-04-01 11-13-08-411.png)
 
 #### 선택사항 - 게시글 목록, 좋아요 수
 
-![Cap 2021-04-01 11-24-00-938](django_15_workshop.assets/Cap 2021-04-01 11-24-00-938.png)
+![Cap 2021-04-01 11-24-00-938](image/django_15_workshop.assets/Cap 2021-04-01 11-24-00-938.png)
