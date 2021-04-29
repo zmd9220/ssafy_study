@@ -7,6 +7,9 @@
 	- 함수는 선언식으로 작성합니다.
 	- 예시) isValid('abcd')  // false
 */
+function isValid (password) {
+	return password.length >= 8
+}
 
 
 /*
@@ -18,7 +21,29 @@
 	- 함수는 표현식으로 작성합니다.
 	- 예시) join(['010', '1234', '5678'], '-')  // '010-1234-5678'
 */
+const join = function (array, separator) {
+	let tmpStr = ''
+	for (let i = 0; i < array.length; i++) {
+		i < array.length-1 ? tmpStr += array[i] + separator : tmpStr += array[i]
+	}
+	return tmpStr
+}
+join(['010', '1234', '5678'], '-')
 
+const join = function (array, separator) {
+	let result = ''
+
+	for (let i = 0; i < array.length; i++) {
+		const item = array[i]
+		if (i < array.length - 1) {
+			result += item + separator
+		} else {
+			result += item
+		}
+	}
+	return result
+}
+join(['010', '1234', '5678'], '-')
 
 /*
 	[함수 기본인자 연습]
@@ -30,7 +55,9 @@
 	
 	예시) makeOrder('mocha') // { menu: 'mocha', size: 'regular' }
 */
-
+const makeOrder = function (menu, size = 'regular') {
+	return { menu: menu, size: size }
+}
 
 /*
 	[화살표 함수 연습]
@@ -44,4 +71,6 @@
 	}
 
 */
+// const celsiusToFahrenheit = celsius => celsius * 9 / 5 + 32
+const celsiusToFahrenheit = celsius => celsius * 9 / 5 + 32
 

@@ -7,7 +7,10 @@
 */
 
 let evenNumber = 0
-
+while (evenNumber !== 6) {
+  console.log(evenNumber)
+  evenNumber += 2
+}
 
 /*
   [for문 연습]
@@ -17,14 +20,16 @@ let evenNumber = 0
   - 매 시행마다 oddNumber를 2씩 증가시키고, 해당 값을 출력합니다.
   - oddNumber가 5가 되면 반복문을 종료합니다.
 */
-
+for (let oddNumber = 1; oddNumber < 5; oddNumber+2) {
+  console.log(oddNumber)  
+}
 
 /*
   [for... in 연습]
 
   Tip.
     JS 객체의 value는 점(.) 또는 대괄호 표기법을 이용하여 
-    key값을 통해 접근 가능합니다. ex) obj.key, obj[key]
+    key값을 통해 접근 가능합니다. ex) obj.key, obj['key']
   
   - 주어진 객체를 순회하면서 예시와 같이 출력합니다.
   - 예시) title: '벤자민 버튼의 시간은 거꾸로 간다'
@@ -36,6 +41,9 @@ const bestMovie = {
   actors: ['브래드 피트', '케이트 블란쳇'],
   genres: ['romance', 'fantasy'],
 }
+for (const key in bestMovie) {
+  console.log(`${key}: ${bestMovie[key]}`)
+}
 
 
 /*
@@ -43,14 +51,20 @@ const bestMovie = {
   
   Tip.
     JS 객체의 value는 점(.) 또는 대괄호 표기법을 이용하여
-    key값을 통해 접근 가능합니다. ex) obj.key, obj[key]
+    key값을 통해 접근 가능합니다. ex) obj.key, obj['key']
 
   - 주어진 배열을 순회하면서 예시와 같이 출력합니다.
   - 예시) title: '어바웃 타임'
 */
 
 const movies = [
-  {title: '어바웃 타임'},
-  {title: '굿 윌 헌팅'},
-  {title: '인턴'},
+  { title: '어바웃 타임' },
+  { title: '굿 윌 헌팅' },
+  { title: '인턴' },
 ]
+for (const i of movies) {
+  // console.log(`${i}: ${movies[i]}`)
+  for (const key in i) {
+    console.log(`${key}: ${i[key]}`)
+  }
+}
