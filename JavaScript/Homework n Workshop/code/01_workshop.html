@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .done {
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+<body>
+    <form action="" id='test_form'>
+      <input type="text" name="ipt_text" id="ipt_text">
+      <button>add</button>
+      <button type="reset">이것과 event.target.reset()과 유사</button>
+    </form>
+    <h3>Todo List</h3>
+    <ul id="todo_ul">
+    </ul>
+  <script>
+    // form이 제출이 되면
+
+    const formEvent = document.querySelector('#test_form')
+    
+    formEvent.addEventListener('submit', function (event) {
+      // console.log(event)
+      // alert('제출되었습니다.') // 실제 제출 되는지 테스트
+      // form은 제출시 새로고침이 되며 데이터가 다 날아감 그래서 이벤트를 막아야됨
+      event.preventDefault()
+
+      // input의 텍스트를 꺼내서
+      const myTextInput = document.querySelector('#ipt_text')
+      const text = myTextInput.value
+      // console.log(text)
+
+      // 빈 값인 데이터는 입력을 방지한다.
+      // 같다 ===
+      // 같지 않다 !==
+      if (text) {
+        // 새로운 li 요소를 만든 뒤
+        const todoLi = document.createElement('li')
+        todoLi.innerText = text
+        todoLi.setAttribute('id', 'todo_list')
+        
+        // 클릭했을 때 클래스 체크 여부 파악 후 .done 클래스 추가 제거
+        // https://developer.mozilla.org/ko/docs/Web/API/Element/classList
+        todoLi.addEventListener('click', function(event) {
+          // todoLi.className 클래스가 1개면 이걸로도 가능
+          // if (todoLi.classList.contains('done')) {
+          //   // todoLi.removeAttribute('class') // 문제점 전체 클래스가 날아감
+          //   todoLi.classList.remove('done')
+          // }
+          // else {
+          //   // todoLi.setAttribute('class', 'done') - 문제점 기존에 존재하던 클래스 다 날아가고 여기서 적힌 클래스만 적용됨
+          //   todoLi.classList.add('done') // 기존 클래스에서 하나 더 추가
+          // }
+          // 위의 기능을 이거 하나로 구현 가능
+          todoLi.classList.toggle('done')
+        })
+        // 그래서 attribute는 요소가 1개로 끝날 수 있는 태그들 (method, id 이런거)에 사용을 권장
+
+        // 새로운 button 요소를 만든 뒤
+        const todoLiBtn = document.createElement('button') // <button></button>
+        todoLiBtn.innerText = 'X'
+
+        // 클릭하면 li 요소를 삭제하는 이벤트 처리기를 붙인다.
+        todoLiBtn.addEventListener('click', function () {
+          todoLi.remove()
+        })
+        // li 요소에 삽입한다.
+        todoLi.append(todoLiBtn)
+
+        // ul 요소에 삽입한다.
+        const todoUl = document.querySelector("#todo_ul")
+        todoUl.append(todoLi)
+  
+        // 제출하고 나면 input value 초기화 - form을 최초의 상태로 돌림
+        event.target.reset()
+      }
+
+
+    })
+  </script>
+</body>
+</html>
