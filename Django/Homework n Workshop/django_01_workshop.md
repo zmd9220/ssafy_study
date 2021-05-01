@@ -2,8 +2,6 @@
 
 
 
-![Cap 2021-03-08 17-56-17-644](django_0.assets/Cap 2021-03-08 17-56-17-644-1615193912356.png)
-
 ### 1. intro/urls.py
 
 ``` python
@@ -61,5 +59,4 @@ def lotto(request):
 </body>
 </html>
 ```
-
 

@@ -35,7 +35,7 @@ def index(request):
 {% endblock content %}
 ```
 
-![Cap 2021-03-23 15-11-57-579](django_08_workshop.assets/Cap 2021-03-23 15-11-57-579.png)
+![2021-0315-11-57-579](image/2021-0315-11-57-579.png)
 
 
 
@@ -83,4 +83,4 @@ def signup(request):
 {% endblock content %}
 ```
 
-![Cap 2021-03-23 15-12-42-668](django_08_workshop.assets/Cap 2021-03-23 15-12-42-668.png)
+![2021-0315-12-42-668](image/2021-0315-12-42-668.png)

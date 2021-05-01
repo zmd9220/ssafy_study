@@ -105,7 +105,7 @@ def comment_create(request, pk):
     # return redirect('accounts:login')
 ```
 
-![Cap 2021-03-25 09-42-56-157](image/Cap 2021-03-25 09-42-56-157.png)
+![2021-0309-42-56-157](image/2021-0309-42-56-157.png)
 
 ___
 
@@ -130,7 +130,7 @@ def detail(request, pk):
     return render(request, 'articles/detail.html', context)
 ```
 
-![Cap 2021-03-25 09-43-06-160](image/Cap 2021-03-25 09-43-06-160.png)
+![2021-0309-43-06-160](image/2021-0309-43-06-160.png)
 
 ___
 
@@ -150,4 +150,4 @@ def comment_delete(request, article_pk, comment_pk):
     return redirect('articles:detail', article_pk)
 ```
 
-![Cap 2021-03-25 09-43-12-232](image/Cap 2021-03-25 09-43-12-232.png)
+![2021-0309-43-12-232](image/2021-0309-43-12-232.png)
