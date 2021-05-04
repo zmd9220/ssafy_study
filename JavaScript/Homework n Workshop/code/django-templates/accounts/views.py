@@ -131,8 +131,8 @@ def follow(request, user_pk):
         # return redirect('accounts:profile', you.username)
         response_data = {
             'followed': followed,
-            'follower_count': you.followers.count(),
-            'following_count': you.followings.count(),
+            'followers_count': you.followers.count(),
+            'followings_count': you.followings.count(),
         }
         return JsonResponse(response_data)
     # return redirect('accounts:login')
