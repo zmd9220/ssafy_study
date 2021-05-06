@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .completed {
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div v-show="seen">
+      {{ num }}
+      {{ doubleNum01() }}
+      {{ doubleNum02 }}
+    </div>
+  </div>
+
+  <!-- Vue CDN 삽입 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        num = 2
+      },
+      methods: {
+        doubleNum01: function () {
+          console.log('from methods')
+          return this.num * 2
+        },
+      },
+      computed: {
+        doubleNum02: function () {
+          console.log('from computed')
+          return this.num * 2
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    img {
+      height: 500px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <button v-on:click="getDog">강아지 내놔</button>
+    <img v-if="imgSource" v-bind:src="imgSource" alt="dog">
+  </div>
+  <!-- Axios & Vue CDN 삽입 -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const app = new Vue ({
+      el: '#app',
+      data: {
+        imgSource: '',
+      },
+      // methods 아래 작성되는 함수들은 다 function 키워드
+      // 함수로 작성되는 속성들은 다 function 키워드
+      // 그 외, arrow function
+      methods: {
+        // this === vue instance 
+        getDog: function () {
+          // console.log('getDog 호출!')
+          const API_URI = 'https://dog.ceo/api/breeds/image/random'
+
+          axios.get(API_URI) // => Promise.then
+            // function 키워드  
+            // this 는 실행 컨텍스트를 가르킨다. - 함수를 실행하는 객체를 가르킨다. 
+            // (실행하는 객체가 없으면 전역객체를 가르킴)
+            // 그래서, home.call() 김재석, call() 유재석
+
+            // arrow 함수, (Lexical Scope)
+            // 작성하고 있는 함수의 this를 따라간다.
+
+            /* callback 함수를 function 키워드로 생성하면 기본적으로 전역 객체에서 함수가 실행이 됨
+             => this == window 그러므로 현재 vue instance 객체와 다른 객체에서 실행되므로 접근이 안됨
+             우리가 원하는 것 this == vue instance 이렇게 만들기 위해선 arrow 함수로 구성하는데 arrow 함수의 경우
+             this == 작성하고 있는 함수의 this -> 현재 함수의 객체 -> vue instance 를 가르킴
+             */
+            .then( (response) => { 
+              this.imgSource = response.data.message
+            })
+        }
+      }
+    })
+  </script>
+</body>
+</html>

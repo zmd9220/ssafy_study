@@ -146,11 +146,19 @@
 
 
 
+- 앞으로 우리가 구현하게될 웹사이트 구조
+
+![2021-05-06_13-13-54](JS 210506 - vue js.assets/2021-05-06_13-13-54.png)
+
+
+
 #### 그래서 Vue.js 는 뭔데?
 
 - HTML, js 만을 만들기 위한 프레임워크
 - 왜 Vue를 씀?
   - 가장 인기있는 프론트엔드 프레임워크 (Github star ranking)
+
+
 
 
 
@@ -242,4 +250,221 @@
   5. 반복 - v-for
   6. 사용자 입력 핸들링 - v-on
   7. 양방향 핸들링 - v-model
+
+
+
+
+
+## 오후
+
+- 오전 복습
+  - vue.js
+  - SPA
+  - CSR - 빈 html + js => react, vue.js 등으로 처리 => 화면 보여줌
+  - SSR + SPA - 이미 작성된 html (서버에서 저장되어 있음) + js => 다음 동작부터 react, vue.js 등이 처리 하여 화면을 보여줌, 조금이라도 html을 채워서 주는 이유 -> SEO 최적화를 위해, 사용자 체감 상으로 조금 빠르게 화면이 출력되서 (이미 기본 html은 만들어져있으므로) 빠르다고 느껴짐
+  - 그냥 SSR만 사용 -> 장고 생각하면됨 (저장된 html 바로 뿌리고 끝)
+  - SEO 개념, 대응방안
+  - 본격적인 Vue.js 개념, 사용법 복습
+
+
+
+### Basic syntax of Vue.js
+
+
+
+#### Vue instance == Vue component
+
+
+
+#### Options/Data - 'data'
+
+- Vue template에서 interpolation - {{}} 을 통해 접근 가능
+- Vue 인스턴스의 데이터 객체
+- Vue 앱의 상태 데이터를 정의하는 곳
+- v-bind, v-on과 같은 디렉티브에서도 사용 가능
+- Vue 객체 내 다른 함수에서 this 키워드를 통해 접근 가능
+- 주의
+  - 화살표 함수를 'data'에서 사용하면 안됨
+  - 화살표 함수가 부모 컨텐스트를 바인딩하기 때문에, 'this'는 예상과 달리 Vue 인스턴스를 가리키지 않음
+
+
+
+#### Options/Data - 'methods'
+
+- Vue 인스턴스에 추가할 메서드
+- Vue template에서 interpolation - {{}} 을 통해 접근 가능
+- v-on과 같은 디렉티브에서도 사용 가능
+- Vue 객체 내 다른 함수에서 this 키워드를 통해 접근 가능
+- 주의
+  - 화살표 함수를 메서드를 정의하는데 사용하면 안됨
+  - 화살표 함수가 부모 컨텐스트를 바인딩하기 때문에, 'this'는 Vue 인스턴스가 아니며 'this.a'는 정의되지 않음
+- **메서드 안에서 정의할 때 반드시 function 키워드를 사용해야함**
+- 해당 인스턴스에서 접근하는 data, method는 인스턴스명.(data or method) 이므로 메서드와 데이터의 이름을 겹치게 지어선 안된다. (애초에 다른 언어에서도 함수와 데이터명은 겹치게 짓지 않음)
+
+
+
+####  this keyword in vue.js
+
+- Vue 함수 객체 내에서 vue 인스턴스를 가리킴
+- 단, js 함수에서의 this 키워드는 다른 언어와 조금 다르게 동작하는 경우가 있으니 제공되는 별도 handout 참고
+- 화살표 함수를 사용하면 안되는 경우
+  1. data
+  2. method 정의
+- 내가 누구한테서 실행됐는지를 가리킴
+  - home.call() - home 기준으로 찾아나감 (김재석)
+  - call() - 전역 객체를 기준으로 찾아나감 (유재석)
+
+```js
+const name = '유재석'
+
+const home = {
+  name: '김재석',
+}
+
+function call() {
+  console.log(this.name)
+}
+
+// 유재석
+call()
+
+// 김재석
+home.call = call
+home.call()
+```
+
+- vue 에서 this는 항상 vue 객체를 가리킴
+- 화살표 함수를 사용할 경우 window 객체(전역 객체)를 가르키게됨
+- 그럼 arrow function으로 접근하려면 객체.data이름 으로 접근 가능한가요? - 가능은한데 하지말아야 할 것 (this 사용법으로 접근)
+
+
+
+#### Interpolation (보간법)
+
+- Text
+  - 메세지: {{ msg }}
+
+- Raw HTML
+  - v-html=""
+- Attribute
+  - v-bind:id=""
+- Js 표현식
+  - {{ number + 1 }}
+
+
+
+#### Directive (디렉티브)
+
+- v- 접두사가 있는 특수 속성
+- 속성 값은 단일 js 표현식이 됨 (v-for는 예외)
+- 표현식의 값이 변경될 때 반응적으로 DOM에 적용하는 역할을 함
+- 전달인자 (Artuments)
+  - ':' (콜론)을 통해 전달인자를 받을 수도 있음
+- 수식어 (Modifiers)
+  - '.' (점)으로 표시되는 특수 접미사
+  - 디렉티브를 특별한 방법으로 바인딩 해야 함을 나타냄
+
+
+
+- v-show는 항상 렌더링 (스타일로 보였다 가렸다가), v-if는 조건에 따라 렌더링을 했다가 안했다가
+- v-if 는 조건문에 해당하지 않으면 html 상에서 아예 요소가 없음
+- v-show는 해당 조건에 해당하지 않으면 렌더링은 했지만 style="display: none;" 으로 css 를 이용해 가려버림
+
+
+
+- 응답되는 시점에 자동으로 실행되는 함수 -> 콜백함수
+  - 콜백함수의 특징은 전역 객체에서 실행됨(function 키워드 사용시) -> window 객체에서 실행
+
+- callback 함수를 function 키워드로 생성하면 기본적으로 전역 객체에서 함수가 실행이 됨
+  -  => this == window 그러므로 현재 vue instance 객체와 다른 객체에서 실행되므로 접근이 안됨
+
+- 우리가 원하는 것 this == vue instance 이렇게 만들기 위해선 arrow 함수로 구성하는데 arrow 함수의 경우
+  - this == 작성하고 있는 함수의 this -> 현재 함수의 객체 -> vue instance 를 가르킴
+- console로 this를 둘 다 찍어보니까 편안하네요 - 테스트 (function 사용 -> window, arrow 사용 -> vue)
+
+
+
+- v-for
+  - 원본 데이터를 기반으로 엘리먼트 또는 템플릿 블록을 여러 번 렌더링
+  - item in items 구문 사용
+- v-on
+  - 엘리먼트에 이벤트 리스너를 연결
+  - 이벤트 유형은 전달인자로 표시
+  - 특정 이벤트가 발생했을 때, 주어진 코드가 실행 됨
+  - 약어 (shorthand)
+    - v-on = @
+    - v-on:click = @click
+- v-bind
+  - HTML 요소의 속성에 Vue의 상태 데이터를 값으로 할당
+  - Object 형태로 사용하면 value가 true인 key가 class 바인딩 값으로 할당
+  - 약어
+    - v-bind = : (콜론)
+    - v-bind:href = :href
+- v-model - 사용자 입력을 받을 때 (사용자 입력에 따라 데이터도 바뀌고 값도 바뀌고)
+  - HTML form 요소의 값과 data를 양방향 바인딩
+  - 수식어
+    - .lazy - input 대신 change 이벤트 이후에 동기화
+    - .number - 문자열을 숫자로 변경 (항상 숫자로 받음)
+    - .trim - 입력에 대한 trim을 진행 (양쪽 끝 띄어쓰기 없앰)
+
+
+
+- 실습 - todo 페이지 만들기
+- v-for 사용시 반드시 :key를 넣어줘야함 - key를 통해 현재 todo가 제대로 된 데이터를 바라보고 있는지 확인하기 위함
+
+- 추가하고나서 input의 써둔 값을 리셋하려면 어떻게 하나요? `this.content = ''`
+
+- 특정 매개변수가 필요할 경우 (매개변수)로 그냥 넣어줘도 된다 `@click="toggleTodo(todo)" `
+
+
+
+#### Options/Data - 'computed'
+
+- 데이터를 기반으로 하는 계산된 속성 (변수처럼 사용 () 옆에 넣지 말기)
+- 함수의 형태로 정의하지만 함수가 아닌 함수의 반환 값이 바인딩 됨
+- 종속된 대상을 따라 저장(캐싱) 됨
+- **종속된 대상이 변경될 때만 함수를 실행** - 자동으로 실행됨
+- 즉, Date.now() 처럼 아무 곳에도 의존하지 않는 computed 속성의 경우 절대로 업데이트 되지 않음
+- 반드시 반환 값이 있어야 함.
+
+- todoListByStatus는 todoList와 status에 의존하여 값이 결정됨 -> 둘 중에 하나라도 수정이 되면 다시 계산되어 새로운 값을 반환하게됨 => computed의 예시
+
+- html은 클릭했을 때
+- 함수는 보통 동사형태의 이름이 많고, computed는 보통 명사형태의 이름이 많다.
+
+
+
+#### Options/Data - 'watch'
+
+- 특정 데이터 감시
+- 감시하던 데이터의 변화가 일어났을 때 실행되는 함수
+
+
+
+- You are running Vue in development mode. Make sure to turn on production mode when deploying for production 
+  - vue cdn이 개발에 도움이 되는 콘솔 경고를 포함한 버전이라서 나오는 것 - 개발 중 오류나 의견에 대해 나옴
+
+- lodash 사용
+
+- luckyNumbers변수를 보여줄 때 처음에 빈 배열이면 숨길 수 없나요?
+  - `<p v-if="luckyNumbers.length">{{ luckyNumbers }}</p>`
+
+- 배열 초기값을 null 주는건 좋지 않은 방법일까요?
+  - js에는 크게 문제가 없지만 type script 사용시엔 값을 핸들링하기 까다로워질 수 있음
+  - 외부에서 데이터를 가져올거면 null 주는것도 나쁘진 않을듯?
+
+
+
+#### Lifecycle Hooks
+
+- 각 Vue 인스턴스는 생성될 때 일련의 초기화 단계를 거침
+  - 예를 들어 관찰 설정이 필요한 경우, 인스턴스를 DOM에 마운트하는 경우, 그리고 데이터가 변경되어 DOM을 업데이트하는 경우 등
+- 그 과정에서 사용자 정의 로직을 실행할 수 있는 **라이프사이클 훅**도 호출됨
+- 공식문서를 통해 각 라이프사이클 훅의 상세 동작을 참고
+
+- 주로 created, mounted, updated 사용 - function 키워드로 사용
+
+
+
+혹시 vscode 복사 붙여넣기하면 들여쓰기가 엉망이되어서 붙여넣기 되는데 예쁘게 붙여넣기 할 수 있는 방법이 있을까요?
 
