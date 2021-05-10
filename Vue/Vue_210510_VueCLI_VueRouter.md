@@ -1,4 +1,4 @@
-# JS 210510 - Vue CLI 와 Vue router
+# Vue 210510 - Vue CLI 와 Vue router
 
 
 
@@ -247,7 +247,7 @@ $ vue create vue-project
 - netlify 에서 Create a new site 버튼 클릭
 - github에서 배포할 레포지토리 선택 후 build command와 dist 폴더 선택 후 deploy site 클릭
 
-![2021-05-10_13-41-08](Vue 210510 - Vue CLI 와 Vue router.assets/2021-05-10_13-41-08.png)
+![2021-05-10_13-41-08](Vue_210510_VueCLI_VueRouter.assets/2021-05-10_13-41-08.png)
 
 - 이후에 해당 레포지토리로 master로 push 하면 자동으로 반영되서 배포됨 (사이트로)
 
@@ -303,15 +303,195 @@ $ vue create vue-project
 - $emit(event)
 
   - 현재 인스턴스에서 이벤트를 트리거
+- 추가 인자는 리스너의 콜백 함수로 전달
+- 부모 컴포넌트는 자식 컴포넌트가 사용되는 템플릿에서 v-on을 사용하여 자식 컴포넌트가 보낸 이벤트를 청취 (v-on을 이용한 사용자 지정 이벤트)
 
-  - 
+##### event 이름
+
+- 컴포넌트 및 props와는 달리, 이벤트는 자동 대소문자 변환을 제공하지 않음
+- HTML의 대소문자 구분을 위해 DOM 템플릿의 v-on 이벤트 리스너는 항상 자동으로 소문자 변환되기 때문에 v-on:myEvent 는 자동으로 v-on:myevent로 변환
+- 이러한 이유로 이벤트 이름에는 kebab-case를 사용하는 것을 권장
+
+```vue
+<!-- this.$emit('myEvent') 
+	이벤트가 동작하지 않음 -->
+<my-conponent @my-event="doSomething"></my-conponent>
+```
+
+
 
 
 
 #### 실습
 
-- 
-
+- props, emit event 사용
+- https://kr.vuejs.org/v2/guide/components-props.html
+- props의 데이터는 항상 함수 형식으로 제공해야함 (스코프 문제) - 위의 문서 prop 검증 부분
 - 이렇게 데이터를 소통하는 이유 - 단방향 데이터 흐름이기 때문
   - 단방향 데이터 흐름인 이유는 위에 상세히 적어놓음
+
+
+
+
+
+### Vue Router
+
+- Vue.js의 공식 라우터
+- https://router.vuejs.org/kr/
+- 중첩된 라우트/뷰 매핑 모듈화 된, 컴포넌트 기반의 라우터설정 등 SPA상에서 라우팅을 쉽게 개발 할 수 있는 기능을 제공
+
+- 프로젝트 중간에 router를 추가하면 App.vue 및 프로젝트 세팅이 바뀌게 되며, 기존에 작성되던 코드가 날아갈 수 있음 - 주의
+
+![2021-05-10_14-40-23](Vue_210510_VueCLI_VueRouter.assets/2021-05-10_14-40-23.png)
+
+![2021-05-10_14-41-45](Vue_210510_VueCLI_VueRouter.assets/2021-05-10_14-41-45.png)
+
+- router/index.js - 장고의 urls.py와 유사한 역할
+- router-link
+  - index.js 파일에 정의한 경로에 등록한 특정한 컴포넌트와 매핑
+  - HTML5 히스토리 모드에서, router-link는 클릭 이벤트를 차단하여 브라우저가 페이지를 다시 로드하지 않도록 함
+  - a 태그지만 우리가 알고 있는 GET 요청을 보내는 a 태그와 조금 다르게 기본 GET 요청을 보내는 이벤트를 제거한 형태로 구성 (페이지를 새로고침하지 않음, js로 다른 컴포넌트를 보여주기만 함)
+- router-view
+  - 실제 component가 DOM에 부착되어 보이는 자리를 의미
+  - router-link를 클릭하면 해당 경로와 연결되어 있는 index.js에 정의한 컴포넌트가 위치
+
+
+
+
+
+#### History mode
+
+- SPA 단점 중 하나 - url이 변경되지 않음
+  - 이게 왜 단점? - 사용자는 여러 페이지가 자연스럽게 넘겨주면서 새로운 페이지를 보여주는걸 사용자 경험으로 선호하는데 SPA는 한 페이지에 그대로 있음을 보여줌 (url이 바뀌지 않으므로)
+  - 멈춰있는 듯한 경험(url이 멈춤)을 움직이는 것처럼 경험시켜줌 
+- 위의 단점을 개선하기 위해 나온 모드
+
+- HTML hisory API를 사용해서 router를 구현한 것
+- 브라우저의 히스토리는 남기지만 실제 페이지는 이동하지 않는 기능을 지원
+- 그래서 SPA 임에도 웹브라우저에서 뒤로가기, 앞으로 가기가 가능한 이유
+
+
+
+#### Vue router가 필요한 이유
+
+1. SPA 등장 이전
+   - 서버가 모든 라우팅을 통제
+   - 요청 경로에 맞는 HTML을 제공
+2. SPA 등장 이후
+   - 서버는 index.html 하나만 제공
+   - 이후 모든 처리는 HTML 위에서 JS 코드를 활용해 진행
+   - 즉, 요청에 대한 처리를 더 이상 서버가 하지 않음 (할 필요가 없어짐)
+3. 라우팅 처리 차이
+   - SSR
+     - 라우팅에 대한 결정권을 서버가 가짐
+   - CSR
+     - 클라이언트는 더 이상 서버로 요청을 보내지 않고 응답 받은 HTML 문서 안에서 주소가 변경되면 특정 주소에 맞는 컴포넌트를 렌더링
+     - 라우팅에 대한 결정권을 클라이언트가 가짐
+   - Vue Router는 라우팅의 결정권을 가진 Vue.js에서 라우팅을 편리하게 할 수 있는 Tool을 제공해주는 라이브러리
+
+
+
+#### 실습
+
+- @ === '/src' - 대부분의 vue파일이나 자원들은 src 폴더 안에 존재하므로 기본 값 절대 경로인 @가 만들어져 있음
+
+```js
+// import NewComponent from '../components/NewComponent.vue'
+// @ === '/src'
+import NewComponent from '@/components/NewComponent.vue'
+```
+
+- 나중에 컴포넌트가 많아지다보면 Components 폴더에 각 views 파일마다 폴더를 나누게 되려나요..
+  - 하위 컴포넌트를 어디로 꼭 넣어야 하는 건 아니지만 기본적인 추천 구조는 존재함
+  - 아래에서 자세히 설명
+
+
+
+#### components vs views
+
+- 컴포넌트를 만들어 갈 때 정해진 구조가 있는 것은 아님
+- 주로 아래와 같이 구조화 하여 활용
+- App.vue
+  - 최상위 컴포넌트
+- views/
+  - router(index.js)에 매핑되는 컴포넌트를 모아두는 폴더 (App.vue와 연결되는 친구들)
+  - 예시 - App 컴포넌트 내부에 About & Home 컴포넌트 등록
+- components
+  - router에 매핑된 컴포넌트 내부에 작성하는 컴포넌트를 모아두는 폴더 (App.vue와 연결된 친구들의 기능들)
+  - 예시 - Home 컴포넌트 내부에 HelloWorld 컴포넌트 등록
+
+
+
+#### 실습 2 - 점심 추천, 로또
+
+- 항상 template 부분에서 최상위 태그 하나를 생성하고 진행해야함 (vue에서는 최상위 태그로 묶어서 컴포넌트를 제공, 주로 div로 사용)
+
+
+
+
+
+## 오후 웹코칭 2
+
+-  component
+  - 코드들의 묶음
+  - 예시 - 페이스북의 각 화면을 박스별로 component 구성
+
+- SFC - 하나하나의 뷰를 컴포넌트로 나눠서 개발
+
+- vue cli로 관리할것 - 그것을 쓰기 위해 node.js 설치( + npm)
+
+
+
+- Babel & Webpack
+  - Babel - 최신 js 문법을 구 버전 문법으로 변환시켜주는 도구
+  - 최신버전으로 작성만 하면 원하는 버전으로 컨버팅해주므로 문법 변환이 편해짐
+  - 개발 환경에 따라 vue cli를 사용하지 않게 되면 babel & webpack 세팅을 개별적으로 해야할 수 도 있음 (어려운 편)
+  - html에서 일일히 개발해도 상관은 없지만 생산성이 매우 떨어짐 -> 생산성 향상을 위해 이러한 프레임워크가 나온것
+
+
+
+- 컴포넌트는 트리구조 (부모, 자식)
+- **Pass Props & Emit Event 매우 중요**
+- 부모 -> 자식으로 데이터를 보내기 (Pass props)
+- 예시) 부모 - MovieList.vue.movies = []
+  - 자식 MovieItem.vue 에는 movie 프로퍼티가 필요할 때 movie 데이터를 보내줘야 함
+- 자식 -> 부모로 데이터를 보내기 (Emit event) - event 처리로 보내야하므로 구조가 익숙치 않음
+  - 이벤트 리스너와 유사한데, 개발자가 직접 이벤트를 정의하여 사용할 수 있음
+
+- 서로 구분지어서 이름 짓고 사용하는 이유? - 단방향 데이터 흐름이기 때문
+  - 양방향 데이터 흐름은 앱의 데이터 흐름을 이해하게 어렵게 만들 수 있음 (어느 자식에서 바뀐 데이터인지? 부모가 바꾼건지? 자식에 의해 바뀐건지?)
+
+
+
+
+
+
+```bash
+$ vue add router
+```
+- history mode 다시 한번 복습 - SPA로 인한 1페이지 ux 저하를 방지
+
+  - SPA 인데 MPA 인 것 처럼 보여주는 것
+  - 브라우저에는 history API가 존재함 (보여지는 주소를 조작할 수 있는 API)
+
+  - history API를 이용하여 브라우저 상에서 /about 등을 만들게 함으로서 SPA가 아닌 것처럼 보여주게 함
+  - 예시 - 현재 상태에서 /about 들어가면 개발 환경에서는 보여줌 (왜냐면 이렇게 개발 될 것이라고 가정하고 언어가 자동으로 인식해서 보여주기 때문)
+    - 그런데 배포 환경에서는 page not found 에러를 보여줌
+
+  ![2021-05-10_17-12-21](Vue_210510_VueCLI_VueRouter.assets/2021-05-10_17-12-21.png)
+
+  - 이를 해결하기 위해 배포할 당시 옵션에서 어떤 페이지든 일단 / (root) 페이지로 보내고 root에서 찾아가도록 함 (그러면 about 페이지를 잘 찾음)
+
+- router-link, router-view 개념, 필요한 이유
+
+
+
+#### workshop 연습
+
+- Vetur 관련 vscode not find 관련 이슈는 무시해도 됨
+- 위에서 아래는 props, 아래에서 위는 emit event
+- props도 위에서 아래로 2번
+- $emit('parentInput') 2번 일어나서 App까지 감
+- 확장프로그램 vue.js devtools 설치 후 vue로 만들어진 페이지를 들어가면 f12에서 vue 부분 탭이 생김 - vue로 개발 할 때 데이터흐름을 파악하기 용이한 확장 프로그램
+- props를 넘길 때, 부모 측에선 어떤 데이터를 넘길지 정의해야하고 (data, 템플릿 부분에서도 data 변수), 자식 측에선 어떤 데이터를 받을지 정의해야한다. (props)
 

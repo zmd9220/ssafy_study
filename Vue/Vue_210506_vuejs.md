@@ -1,4 +1,4 @@
-# JS 210506 - vue js
+# Vue 210506 - vue js
 
 
 
