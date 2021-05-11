@@ -5,7 +5,7 @@
     <p>appData: {{ appData }}</p>
     <p>childData: {{ childData }}</p>
     <!-- 자식에서 child-input이라는 이벤트가 발생하면 onChildInput 리스너로 처리하겠다. -->
-    <Child :appData="appData" @child-input="onChildInput" />
+    <Child :appData="appData" :parentData="parentData" @child-input="onChildInput" />
   </div>
 </template>
 

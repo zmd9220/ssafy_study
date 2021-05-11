@@ -3,6 +3,7 @@
     <h1>Child</h1>
     <input type="text" @input="onInput" v-model="childData">
     <p>appData: {{ appData }}</p>
+    <p>parentData: {{ parentData }}</p>
   </div>
 </template>
 
@@ -19,7 +20,11 @@ export default {
     appData: {
       type: String,
       required: true, // 데이터가 항상 필요 - 데이터가 안 들어오면 에러나 경고 나오게 관리 가능
-    }
+    },
+    parentData: {
+      type: String,
+      required: true, // 데이터가 항상 필요 - 데이터가 안 들어오면 에러나 경고 나오게 관리 가능
+    },
   },
   methods: {
     // 이벤트 함수 - 위에서 input이 일어났을 때 child-input 이라는 이벤트를 발생 시킴
