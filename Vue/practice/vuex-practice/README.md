@@ -1,4 +1,11 @@
-# vuex-practice
+# Vuex practice project by creating Todo App
+
+## Todo List
+- [x] Create
+- [x] Read
+- [x] Delete
+- [] Update (toggle complete)
+- [] Styling (Optional)
 
 ## Project setup
 ```

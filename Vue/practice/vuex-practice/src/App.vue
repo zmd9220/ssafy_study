@@ -1,18 +1,20 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <input type="text" @keyup.enter="onEnter" v-model="content">
+    <!-- <input type="text" @keyup.enter="onEnter" v-model="content"> -->
+    <TodoForm />
+    <TodoList />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TodoForm from '@/components/TodoForm'
+import TodoList from '@/components/TodoList'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    TodoForm,
+    TodoList,
   },
   data: function () {
     return {
@@ -28,12 +30,5 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
