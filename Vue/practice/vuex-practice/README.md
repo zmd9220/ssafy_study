@@ -4,8 +4,9 @@
 - [x] Create
 - [x] Read
 - [x] Delete
-- [] Update (toggle complete)
-- [] Styling (Optional)
+- [x] Update (toggle complete)
+- [x] Filter Todo by status
+- [x] Styling (Optional)
 
 ## Project setup
 ```

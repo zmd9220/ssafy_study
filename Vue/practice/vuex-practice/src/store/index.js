@@ -1,12 +1,43 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import _ from 'lodash'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins: [
+    createPersistedState(),
+  ],
   state: {
     // todoList를 vuex에서 관리 (전체 공유 데이터)
     todoList: [],
+    status: 'all', // all, completed, inProgress
+  },
+  getters: {
+    todoListByStatus: function (state) {
+      // if (state.status === 'all') {
+      //   return state.todoList
+      // } else if (state.status === 'completed') {
+      //   return state.todoList.filter(todo => {
+      //     return todo.completed
+      //   })
+      // } else {
+      //   return state.todoList.filter(todo => {
+      //     return !todo.completed
+      //   })
+      // }
+      switch (state.status) {
+        case 'completed': {
+          return state.todoList.filter(todo => todo.completed)
+        }
+        case 'inProgress': {
+          return state.todoList.filter(todo => !todo.completed)
+        }
+        default:
+          return state.todoList
+      }
+    },
   },
   mutations: {
     // todoList에 데이터를 넣는 방법
@@ -19,19 +50,22 @@ export default new Vuex.Store({
     //     return todo !== todoItem
     //   })
     // },
-    DELETE_TODO: function (state, createdAt) {
+    DELETE_TODO: function (state, id) {
       state.todoList = state.todoList.filter(todo => {
-        return todo.createdAt !== createdAt
+        return todo.id !== id
       })
     },
     UPDATE_TODO: function (state, todoItem) {
       // todoItem.completed = !todoItem.completed
       state.todoList = state.todoList.map(todo => {
-        if (todo.createdAt === todoItem.createdAt) {
+        if (todo.id === todoItem.id) {
           return todoItem
         }
         return todo
       } )
+    },
+    UPDATE_STATUS: function (state, status) {
+      state.status = status
     },
 
   },
@@ -41,6 +75,7 @@ export default new Vuex.Store({
     addTodo: function (context, content) {
       if (!content) return
       const todo = {
+        id: _.uniqueId(),
         content: content,
         createdAt: Date.now(),
         completed: false,
@@ -50,7 +85,7 @@ export default new Vuex.Store({
       context.commit('ADD_TODO', todo)
     },
     toggleTodo: function (context, todoItem) {
-      context.commit('UPDATED_TODO', {...todoItem, complete: !this.todo.completed})
+      context.commit('UPDATE_TODO', {...todoItem, completed: !todoItem.completed})
     }
   }
 })
