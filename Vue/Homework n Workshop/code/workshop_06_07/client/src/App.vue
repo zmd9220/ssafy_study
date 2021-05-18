@@ -1,32 +1,48 @@
 <template>
   <div id="app">
     <div id="nav">
-      <span>
+      <span v-if="isLogin">
         <router-link :to="{ name: 'TodoList' }">Todo List</router-link> | 
         <router-link :to="{ name: 'CreateTodo' }">Create Todo</router-link> |
+        <router-link to="#" @click.native="onLogout">Logout</router-link>
       </span>
-      <span>
+      <span v-else>
         <router-link :to="{ name: 'Signup' }">Signup</router-link> |
         <router-link :to="{ name: 'Login' }">Login</router-link> 
       </span>
     </div>
-    <router-view/>
+    <router-view @login="onLogin" :isLogin="isLogin" />
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'App',
   data: function () {
     return {
-
+      isLogin: false,
     }
   },
   methods: {
-
+    onLogin: function () {
+      this.isLogin = true
+      axios.defaults.headers.common['Authorization'] = `JWT ${localStorage.getItem('jwt')}`
+    },
+    onLogout: function () {
+      localStorage.removeItem('jwt')
+      this.isLogin = false
+      this.$router.push({ name: 'Login' })
+      axios.defaults.headers.common['Authorization'] = ''
+    }
   },
   created: function () {
-
+    const jwt = localStorage.getItem('jwt')
+    if (jwt) {
+      this.isLogin = true
+      axios.defaults.headers.common['Authorization'] = `JWT ${jwt}`
+    }
   }
 }
 </script>

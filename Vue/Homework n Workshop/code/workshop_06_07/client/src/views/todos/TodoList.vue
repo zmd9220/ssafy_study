@@ -17,6 +17,12 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'TodoList',
+  props: {
+    isLogin: {
+      type: Boolean,
+      required: true,
+    }
+  },
   data: function () {
     return {
       todos: [],
@@ -28,6 +34,9 @@ export default {
       const response = await axios ({
         method: 'get',
         url: SERVER_URL + '/todos/',
+        // headers: {
+        //   Authorization: `JWT ${localStorage.getItem('jwt')}`
+        // }
       })
       this.todos = response.data
       // 일반 함수
@@ -46,7 +55,10 @@ export default {
     deleteTodo: function (todo) {
       axios({
         method: 'delete',
-        url: `${SERVER_URL}/todos/${todo.id}/`
+        url: `${SERVER_URL}/todos/${todo.id}/`,
+        // headers: {
+        //   Authorization: `JWT ${localStorage.getItem('jwt')}`
+        // }
       })
         .then(() => {
           // console.log(res)
@@ -66,6 +78,9 @@ export default {
       axios({
         method: 'put',
         url: `${SERVER_URL}/todos/${todo.id}/`,
+        // headers: {
+        //   Authorization: `JWT ${localStorage.getItem('jwt')}`
+        // },
         data: todoItem,
       })
         .then(() => {
@@ -78,7 +93,11 @@ export default {
       },
     },
   created: function () {
-    this.getTodos()
+    if (this.isLogin) {
+      this.getTodos()
+    } else {
+      this.$router.push({ name: 'Login' })
+    }
   }
 }
 </script>

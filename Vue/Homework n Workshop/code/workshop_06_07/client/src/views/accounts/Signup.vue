@@ -24,6 +24,12 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'Signup',
+  props: {
+    isLogin: {
+      type: Boolean,
+      required: true,
+    }
+  },
   data: function () {
     return {
       credentials: {
@@ -45,6 +51,11 @@ export default {
         console.log(err)
       })
     }
-  }
+  },
+  created: function () {
+    if (this.isLogin) {
+      this.$router.push({ name: 'TodoList' })
+    }
+  },
 }
 </script>

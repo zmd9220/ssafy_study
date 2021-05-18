@@ -12,6 +12,9 @@ const routes = [
     path: '/todos',
     name: 'TodoList',
     component: TodoList,
+    beforeEnter: function () {
+      console.log('todo 들어가기 전 실행되는 함수')
+    }
   },
   {
     path: '/todos/create',
